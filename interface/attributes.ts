@@ -7,16 +7,6 @@ export interface UserAttributes {
   password: string;
 }
 
-export interface HistoryAttribute {
-  id: string;
-  action: string;
-}
-
-export interface HistoryAssingmentAttribute {
-  historyId: string;
-  userId: string;
-}
-
 export interface SignInAttribute {
   email: string;
   password: string;

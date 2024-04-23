@@ -24,6 +24,7 @@ db.sequelize
   .sync()
   .then(() => {
     app.listen(port, () => {
+      console.log("Serving running on port " + port);
       // process.env.TOKEN_SECRET_KEY = cryto.randomBytes(32).toString("hex");
     });
   })
