@@ -85,7 +85,7 @@ const CreateUser = async (
     const { name, username, userType, email, password } = <UserAttributes>(
       request.body
     );
-    const user: UserAttributes = await User.create({
+    const user = await User.create({
       name,
       username,
       userType,

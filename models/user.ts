@@ -43,13 +43,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
     static associate(models: any) {
       // define association here
-
       // user associationg with services models
-      User.belongsToMany(models.History, {
-        through: "HistoryAssignments",
-        onDelete: "RESTRICT",
-        onUpdate: "RESTRICT",
-      });
+      // User.belongsToMany(models, {
+      //   through: "HistoryAssignments",
+      //   onDelete: "RESTRICT",
+      //   onUpdate: "RESTRICT",
+      // });
     }
   }
 
