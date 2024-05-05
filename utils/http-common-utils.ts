@@ -25,3 +25,22 @@ export const httpErrorResponse = (
     errors,
   });
 };
+
+export const pagination = (
+  page: number,
+  size: number,
+  count: number,
+  meta: Array<any> | Object
+) => {
+  const totalPages = Math.ceil(count / size);
+  const nextPage = page < totalPages ? page + 1 : null;
+  const prevPage = page > 1 ? page - 1 : null;
+
+  return {
+    currentPage: page,
+    nextPage,
+    prevPage,
+    totalPages,
+    meta,
+  };
+};

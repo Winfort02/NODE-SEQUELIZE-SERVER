@@ -11,3 +11,13 @@ export interface SignInAttribute {
   email: string;
   password: string;
 }
+
+export interface RoleAttribute {
+  id: string;
+  roleName: string;
+}
+
+export interface PolicyAttribute {
+  id: string;
+  policyName: string;
+}

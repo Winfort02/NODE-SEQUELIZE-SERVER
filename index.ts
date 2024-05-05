@@ -9,7 +9,7 @@ dotenv.config();
 // create instance of express
 const app = express();
 const options = {
-  origin: `${process.env.DB_HOST}:4200`,
+  origin: `http://localhost:3000`,
 };
 app.use(cors(options));
 app.use(express.json());

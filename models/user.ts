@@ -3,7 +3,6 @@ import { Model } from "sequelize";
 import { UserAttributes } from "../interface/attributes";
 import { CONSTANT_MODEL } from "../helper/constant-model";
 import { UserInput } from "../interface/input-attributes";
-import { v4 as uuidv4 } from "uuid";
 
 const useBcrypt = require("sequelize-bcrypt");
 
@@ -56,8 +55,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue: uuidv4(),
-        allowNull: true,
+        allowNull: false,
         primaryKey: true,
       },
       name: {

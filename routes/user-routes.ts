@@ -24,6 +24,15 @@ router.get(
 );
 
 /**
+ * Router - Archive User List
+ */
+router.get(
+  API_ROUTES.USER.ARCHIVE,
+  AuthenticationMiddleware,
+  UserController["GetArchiveUserList"]
+);
+
+/**
  * Router - Create new user
  */
 router.post(
@@ -59,4 +68,21 @@ router.delete(
   UserController["DeleteUser"]
 );
 
+/**
+ * Router - Delete current user
+ */
+router.delete(
+  API_ROUTES.USER.DELETE_PERMANENT,
+  AuthenticationMiddleware,
+  UserController["DeletePermanentUser"]
+);
+
+/**
+ * Router - Restore current user
+ */
+router.patch(
+  API_ROUTES.USER.RESTORE,
+  AuthenticationMiddleware,
+  UserController["RestoreUser"]
+);
 export default router;

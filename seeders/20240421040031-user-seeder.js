@@ -6,6 +6,8 @@ module.exports = {
     /**
      * User Seeder
      */
+    const bcrypt = require("bcrypt");
+    const saltRounds = 12;
     await import("uuid").then(async (module) => {
       const { v4 } = module;
       await queryInterface.bulkInsert(
@@ -17,7 +19,7 @@ module.exports = {
             username: "winfort02",
             userType: 1,
             email: "winfort02@gmail.com",
-            password: "@Admin123",
+            password: await bcrypt.hash("#Jerwin123", saltRounds),
           },
           {
             id: v4(),
@@ -25,7 +27,7 @@ module.exports = {
             username: "sean02",
             userType: 0,
             email: "seansiclot@gmail.com",
-            password: "@User123",
+            password: await bcrypt.hash("#Sean123", saltRounds),
           },
         ],
         {}

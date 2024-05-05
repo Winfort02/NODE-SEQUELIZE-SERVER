@@ -22,7 +22,7 @@ const SignIn = async (
       return AuthErrorHandler(
         response,
         HTTP_RESPONSE.STATUS.NOT_FOUND,
-        "Email Not Found"
+        "Email not found, Please Try again !"
       );
     }
     const isAunthenticated = await user.authenticate(password);
@@ -30,7 +30,7 @@ const SignIn = async (
       return AuthErrorHandler(
         response,
         HTTP_RESPONSE.STATUS.BAD_REQUEST,
-        "Incorrect email or password. Please try agaian !"
+        "Incorrect email or password. Please try again !"
       );
     }
     const token = generateToken({
