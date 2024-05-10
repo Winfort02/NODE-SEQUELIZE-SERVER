@@ -2,9 +2,11 @@ import { Op } from "sequelize";
 
 export const SerachQeueryHelper = (keywords: string) => {
   return {
-    username: { [Op.like]: `%${keywords}%` },
-    name: { [Op.like]: `%${keywords}%` },
-    email: { [Op.like]: `%${keywords}%` },
+    [Op.or]: {
+      username: { [Op.like]: `%${keywords}%` },
+      name: { [Op.like]: `%${keywords}%` },
+      email: { [Op.like]: `%${keywords}%` },
+    },
   };
 };
 
