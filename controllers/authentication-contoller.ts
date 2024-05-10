@@ -54,7 +54,6 @@ const SignIn = async (
       response
     );
   } catch (error) {
-    console.log(error);
     return httpErrorResponse(
       HTTP_RESPONSE.STATUS.BAD_REQUEST,
       HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
