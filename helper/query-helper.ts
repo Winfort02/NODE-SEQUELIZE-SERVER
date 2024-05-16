@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 
-export const SerachQeueryHelper = (keywords: string) => {
+export const SearchQueryHelper = (keywords: string) => {
   return {
     [Op.or]: {
       username: { [Op.like]: `%${keywords}%` },
@@ -10,7 +10,7 @@ export const SerachQeueryHelper = (keywords: string) => {
   };
 };
 
-export const SortOueryHelper = [
+export const SortQueryHelper = [
   ["createdAt", "DESC"],
   ["name", "ASC"],
 ];

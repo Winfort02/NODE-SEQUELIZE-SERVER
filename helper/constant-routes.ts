@@ -9,4 +9,10 @@ export const API_ROUTES = {
     RESTORE: "/api/users/restore/:id",
     DELETE_PERMANENT: "/api/users/delete/:id",
   },
+  POLICIES: {
+    BASE: "/api/policies",
+    BASE_WITH_ID: "/api/policies/:id",
+    RESTORE: "/api/policies/restore/:id",
+    DELETE_PERMANENT: "/api/policies/delete/:id",
+  },
 };

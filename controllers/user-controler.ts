@@ -10,8 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import { pagination } from "../utils/http-common-utils";
 import { Op } from "sequelize";
 import {
-  SerachQeueryHelper,
-  SortOueryHelper,
+  SearchQueryHelper,
+  SortQueryHelper,
   PaginationQueryBuilder,
 } from "../helper/query-helper";
 
@@ -30,8 +30,8 @@ const GetUserList = async (
     const page = parseInt(request.query.page as string) || 1;
     const pageSize = parseInt(request.query.size as string) || 25;
     const keywords = (request.query.keywords as string) || "";
-    const search = SerachQeueryHelper(keywords);
-    const sort = SortOueryHelper;
+    const search = SearchQueryHelper(keywords);
+    const sort = SortQueryHelper;
     const offset = (page - 1) * pageSize;
     const queryBuilder = PaginationQueryBuilder(search, sort, offset, pageSize);
     const { count, rows } = await User.findAndCountAll(queryBuilder);
@@ -65,12 +65,12 @@ const GetArchiveUserList = async (
     const page = parseInt(request.query.page as string) || 1;
     const pageSize = parseInt(request.query.size as string) || 25;
     const keywords = (request.query.keywords as string) || "";
-    const search = SerachQeueryHelper(keywords);
+    const search = SearchQueryHelper(keywords);
     const option = {
       ...search,
       deletedAt: { [Op.ne]: null },
     };
-    const sort = SortOueryHelper;
+    const sort = SortQueryHelper;
     const offset = (page - 1) * pageSize;
     const query = PaginationQueryBuilder(option, sort, offset, pageSize, false);
     const { count, rows } = await User.findAndCountAll(query);

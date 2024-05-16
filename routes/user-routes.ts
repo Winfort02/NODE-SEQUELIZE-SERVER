@@ -1,6 +1,6 @@
 import express from "express";
 import UserController from "./../controllers/user-controler";
-import AuthenticationContoller from "../controllers/authentication-contoller";
+import AuthenticationController from "../controllers/authentication-contoller";
 import { API_ROUTES } from "../helper/constant-routes";
 import { AuthenticationMiddleware } from "./../utils/middleware-common-utils";
 
@@ -12,7 +12,7 @@ const router = express.Router();
 /**
  * Router - User List
  */
-router.post(API_ROUTES.LOGIN.BASE, AuthenticationContoller["SignIn"]);
+router.post(API_ROUTES.LOGIN.BASE, AuthenticationController["SignIn"]);
 
 /**
  * Router - User List
