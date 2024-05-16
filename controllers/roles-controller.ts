@@ -5,17 +5,17 @@ import {
 	httpErrorResponse,
 	httpSuccessResponse,
 } from "../utils/http-common-utils";
-import { PolicyAttribute } from "../interface/attributes";
+import { RoleAttribute } from "../interface/attributes";
 import { v4 as uuidv4 } from "uuid";
 
-const { Policy } = db;
+const { Roles } = db;
 
 /**
- * method to get all policy
+ * method to get all roles
  */
-const GetPolicyList = async (response: Response): Promise<Response> => {
+const GetRolesList = async (response: Response): Promise<Response> => {
 	try {
-		const data = await Policy;
+		const data = await Roles;
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.SUCCESS,
 			HTTP_RESPONSE.MESSAGES.SUCCESS,
@@ -33,19 +33,19 @@ const GetPolicyList = async (response: Response): Promise<Response> => {
 };
 
 /**
- * method to get policy by id
+ * method to get roles by id
  * @param request
  * @param response
  * @returns
  */
-const GetPolicyById = async (
+const GetRolesById = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const policy = await Policy.findByPk(id);
-		if (!policy) {
+		const roles = await Roles.findByPk(id);
+		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
 				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
@@ -56,7 +56,7 @@ const GetPolicyById = async (
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.SUCCESS,
 			HTTP_RESPONSE.MESSAGES.SUCCESS,
-			policy,
+			roles,
 			response
 		);
 	} catch (error) {
@@ -70,26 +70,25 @@ const GetPolicyById = async (
 };
 
 /**
- * method to create policy
+ * method to create roles
  * @param request
  * @param response
  * @returns
  */
-const CreatePolicy = async (
+const CreateRoles = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
 	try {
-		const { policyName, isPolicyActive } = <PolicyAttribute>request.body;
-		const policy = await Policy.create({
+		const { roleName } = <RoleAttribute>request.body;
+		const roles = await Roles.create({
 			id: uuidv4(),
-			policyName,
-			isPolicyActive,
+			roleName,
 		});
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.CREATED,
 			HTTP_RESPONSE.MESSAGES.CREATED,
-			policy,
+			roles,
 			response
 		);
 	} catch (error) {
@@ -102,20 +101,20 @@ const CreatePolicy = async (
 	}
 };
 /**
- * method to update policy
+ * method to update roles
  * @param request
  * @param response
  * @returns
  */
-const UpdatePolicy = async (
+const UpdateRoles = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const { policyName, isPolicyActive } = <PolicyAttribute>request.body;
-		const policy = await Policy.findByPk(id);
-		if (!policy) {
+		const { roleName } = <RoleAttribute>request.body;
+		const roles = await Roles.findByPk(id);
+		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
 				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
@@ -123,13 +122,12 @@ const UpdatePolicy = async (
 				response
 			);
 		}
-		policy.policyName = policyName;
-		policy.isPolicyActive = isPolicyActive;
-		policy.save();
+		roles.rolesName = roleName;
+		roles.save();
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.UPDATED,
 			HTTP_RESPONSE.MESSAGES.UPDATED,
-			policy,
+			roles,
 			response
 		);
 	} catch (error) {
@@ -143,18 +141,18 @@ const UpdatePolicy = async (
 };
 
 /**
- *  method to delete current policy
+ *  method to delete current roles
  * @param request - request body / params
  * @param response - response body
  */
-const DeletePolicy = async (
+const DeleteRoles = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const policy = await Policy.findByPk(id);
-		if (!policy) {
+		const roles = await Roles.findByPk(id);
+		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
 				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
@@ -162,7 +160,7 @@ const DeletePolicy = async (
 				response
 			);
 		}
-		await policy.destroy();
+		await roles.destroy();
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.NO_CONTENT,
 			HTTP_RESPONSE.MESSAGES.NO_CONTENT,
@@ -180,9 +178,9 @@ const DeletePolicy = async (
 };
 
 export default {
-	GetPolicyList,
-	GetPolicyById,
-	CreatePolicy,
-	DeletePolicy,
-	UpdatePolicy,
+	GetRolesList,
+	GetRolesById,
+	CreateRoles,
+	DeleteRoles,
+	UpdateRoles,
 };
