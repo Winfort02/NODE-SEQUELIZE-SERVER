@@ -33,12 +33,49 @@ const GetRolesList = async (response: Response): Promise<Response> => {
 };
 
 /**
+ * method to get roles by user id
+ * @param request
+ * @param response
+ * @returns
+ */
+const GetRoleByUserId = async (
+	request: Request,
+	response: Response
+): Promise<Response> => {
+	try {
+		const { userId } = request.params;
+		const roles = await Roles.findByPk(userId);
+		if (!roles) {
+			return httpErrorResponse(
+				HTTP_RESPONSE.STATUS.NOT_FOUND,
+				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
+				{},
+				response
+			);
+		}
+		return httpSuccessResponse(
+			HTTP_RESPONSE.STATUS.SUCCESS,
+			HTTP_RESPONSE.MESSAGES.SUCCESS,
+			roles,
+			response
+		);
+	} catch (error) {
+		return httpErrorResponse(
+			HTTP_RESPONSE.STATUS.BAD_REQUEST,
+			HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
+			error,
+			response
+		);
+	}
+};
+
+/**
  * method to get roles by id
  * @param request
  * @param response
  * @returns
  */
-const GetRolesById = async (
+const GetRoleById = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
@@ -75,15 +112,16 @@ const GetRolesById = async (
  * @param response
  * @returns
  */
-const CreateRoles = async (
+const CreateRole = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
 	try {
-		const { roleName } = <RoleAttribute>request.body;
+		const { roleName, assignedPolicies } = <RoleAttribute>request.body;
 		const roles = await Roles.create({
 			id: uuidv4(),
 			roleName,
+			assignedPolicies,
 		});
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.CREATED,
@@ -100,13 +138,14 @@ const CreateRoles = async (
 		);
 	}
 };
+
 /**
  * method to update roles
  * @param request
  * @param response
  * @returns
  */
-const UpdateRoles = async (
+const UpdateRole = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
@@ -145,7 +184,7 @@ const UpdateRoles = async (
  * @param request - request body / params
  * @param response - response body
  */
-const DeleteRoles = async (
+const DeleteRole = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
@@ -177,10 +216,101 @@ const DeleteRoles = async (
 	}
 };
 
+/**
+ *
+ * @param request
+ * @param response
+ * @returns
+ */
+const AssignRolesToUser = async (
+	request: Request,
+	response: Response
+): Promise<Response> => {
+	try {
+		const { userId, roleId } = request.body;
+		const role = await Roles.findByPk(roleId);
+		if (!role) {
+			return httpErrorResponse(
+				HTTP_RESPONSE.STATUS.NOT_FOUND,
+				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
+				{},
+				response
+			);
+		}
+		if (role.assignedUsers.includes(userId)) {
+			return httpErrorResponse(
+				HTTP_RESPONSE.STATUS.BAD_REQUEST,
+				HTTP_RESPONSE.MESSAGES.DUPLICATE,
+				{},
+				response
+			);
+		}
+		role.assignedUsers.push(userId);
+		await role.save();
+		return httpSuccessResponse(
+			HTTP_RESPONSE.STATUS.NO_CONTENT,
+			HTTP_RESPONSE.MESSAGES.NO_CONTENT,
+			{},
+			response
+		);
+	} catch (error) {
+		return httpErrorResponse(
+			HTTP_RESPONSE.STATUS.BAD_REQUEST,
+			HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
+			error,
+			response
+		);
+	}
+};
+
+const AssignPolicyToRole = async (
+	request: Request,
+	response: Response
+): Promise<Response> => {
+	try {
+		const { roleId, policyId } = request.body;
+		const role = await Roles.findByPk(roleId);
+		if (!role) {
+			return httpErrorResponse(
+				HTTP_RESPONSE.STATUS.NOT_FOUND,
+				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
+				{},
+				response
+			);
+		}
+		if (role.assignedPolicies.includes(policyId)) {
+			return httpErrorResponse(
+				HTTP_RESPONSE.STATUS.BAD_REQUEST,
+				HTTP_RESPONSE.MESSAGES.DUPLICATE,
+				{},
+				response
+			);
+		}
+		role.assignedPolicies.push(policyId);
+		await role.save();
+		return httpSuccessResponse(
+			HTTP_RESPONSE.STATUS.NO_CONTENT,
+			HTTP_RESPONSE.MESSAGES.NO_CONTENT,
+			{},
+			response
+		);
+	} catch (error) {
+		return httpErrorResponse(
+			HTTP_RESPONSE.STATUS.BAD_REQUEST,
+			HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
+			error,
+			response
+		);
+	}
+};
+
 export default {
 	GetRolesList,
-	GetRolesById,
-	CreateRoles,
-	DeleteRoles,
-	UpdateRoles,
+	GetRoleByUserId,
+	GetRoleById,
+	CreateRole,
+	DeleteRole,
+	UpdateRole,
+	AssignRolesToUser,
+	AssignPolicyToRole,
 };

@@ -5,7 +5,6 @@ export interface UserAttributes {
 	email: string;
 	userType: number;
 	password: string;
-	roles?: RoleAttribute[];
 }
 
 export interface SignInAttribute {
@@ -18,6 +17,8 @@ export interface RoleAttribute {
 	roleName: string;
 	userId?: string;
 	policies?: PolicyAttribute[];
+	assignedUsers: number[];
+	assignedPolicies: number[];
 }
 
 export interface PolicyAttribute {

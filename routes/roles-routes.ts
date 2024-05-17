@@ -10,48 +10,75 @@ import { AuthenticationMiddleware } from "../utils/middleware-common-utils";
 const router = express.Router();
 
 /**
- * get all roles
+ * Get all roles (requires authentication)
  */
 router.get(
-	API_ROUTES.POLICIES.BASE,
+	API_ROUTES.ROLES.BASE,
 	AuthenticationMiddleware,
 	RolesController["GetRolesList"]
 );
 
 /**
- *  get roles by id
+ * Get role by ID (requires authentication)
  */
 router.get(
-	API_ROUTES.POLICIES.BASE_WITH_ID,
+	API_ROUTES.ROLES.BASE_WITH_ID,
 	AuthenticationMiddleware,
-	RolesController["GetRolesById"]
+	RolesController["GetRoleById"]
 );
 
 /**
- * update roles
+ * Update role (requires authentication)
  */
 router.patch(
-	API_ROUTES.POLICIES.BASE_WITH_ID,
+	API_ROUTES.ROLES.BASE_WITH_ID,
 	AuthenticationMiddleware,
-	RolesController["UpdateRoles"]
+	RolesController["UpdateRole"]
 );
 
 /**
- * create roles
+ * Create role (requires authentication)
  */
 router.post(
-	API_ROUTES.POLICIES.BASE,
+	API_ROUTES.ROLES.BASE,
 	AuthenticationMiddleware,
-	RolesController["CreateRoles"]
+	RolesController["CreateRole"]
 );
 
 /**
- * delete roles
+ * Delete role (requires authentication)
  */
 router.delete(
-	API_ROUTES.POLICIES.DELETE_PERMANENT,
+	API_ROUTES.ROLES.DELETE_PERMANENT,
 	AuthenticationMiddleware,
-	RolesController["DeleteRoles"]
+	RolesController["DeleteRole"]
+);
+
+/**
+ * Get roles by user ID (requires authentication)
+ */
+router.get(
+	`${API_ROUTES.ROLES.BASE}/:userId`,
+	AuthenticationMiddleware,
+	RolesController["GetRoleByUserId"]
+);
+
+/**
+ * Assign user to a role (requires authentication)
+ */
+router.post(
+	`${API_ROUTES.ROLES.BASE_WITH_ID}/assign-user`,
+	AuthenticationMiddleware,
+	RolesController["AssignRolesToUser"]
+);
+
+/**
+ * Assign policy to a role (requires authentication)
+ */
+router.post(
+	`${API_ROUTES.ROLES.BASE_WITH_ID}/assign-policy`,
+	AuthenticationMiddleware,
+	RolesController["AssignPolicyToRole"]
 );
 
 export default router;

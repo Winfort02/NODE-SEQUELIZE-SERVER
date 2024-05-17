@@ -5,7 +5,7 @@ import { PolicyInput } from "../interface/input-attributes";
 import { v4 as uuidv4 } from "uuid";
 import { CONSTANT_MODEL } from "../helper/constant-model";
 
-module.exports = (sequelize: any, DataTypes: any) => {
+module.exports = (sequelize: any) => {
 	class Policies
 		extends Model<PolicyAttribute, PolicyInput>
 		implements PolicyAttribute
@@ -24,6 +24,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
 			Policies.belongsTo(RolesModel, { foreignKey: "roleId" });
 		}
 	}
+	const { DataTypes } = require("sequelize");
+
 	Policies.init(
 		{
 			id: {
@@ -41,6 +43,13 @@ module.exports = (sequelize: any, DataTypes: any) => {
 				type: DataTypes.BOOLEAN,
 				allowNull: false,
 				defaultValue: false,
+			},
+			roleId: {
+				type: DataTypes.UUID,
+				references: {
+					model: "Roles",
+					key: "id",
+				},
 			},
 		},
 		{
