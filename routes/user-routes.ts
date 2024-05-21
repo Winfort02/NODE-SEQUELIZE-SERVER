@@ -18,71 +18,72 @@ router.post(API_ROUTES.LOGIN.BASE, AuthenticationController["SignIn"]);
  * Router - User List
  */
 router.get(
-  API_ROUTES.USER.BASE,
-  AuthenticationMiddleware,
-  UserController["GetUserList"]
+	API_ROUTES.USER.BASE,
+	AuthenticationMiddleware,
+	UserController["GetUserList"]
 );
 
 /**
  * Router - Archive User List
  */
 router.get(
-  API_ROUTES.USER.ARCHIVE,
-  AuthenticationMiddleware,
-  UserController["GetArchiveUserList"]
+	API_ROUTES.USER.ARCHIVE,
+	AuthenticationMiddleware,
+	UserController["GetArchiveUserList"]
 );
 
 /**
  * Router - Create new user
  */
 router.post(
-  API_ROUTES.USER.BASE,
-  AuthenticationMiddleware,
-  UserController["CreateUser"]
+	API_ROUTES.USER.BASE,
+	AuthenticationMiddleware,
+	UserController["CreateUser"]
 );
 
 /**
  * Router - Get user info using id
  */
 router.get(
-  API_ROUTES.USER.BASE_WITH_ID,
-  AuthenticationMiddleware,
-  UserController["GetUserById"]
+	API_ROUTES.USER.BASE_WITH_ID,
+	AuthenticationMiddleware,
+	UserController["GetUserById"]
 );
 
 /**
  * Router - Update current user
  */
 router.put(
-  API_ROUTES.USER.BASE_WITH_ID,
-  AuthenticationMiddleware,
-  UserController["UpdateUser"]
+	API_ROUTES.USER.BASE_WITH_ID,
+	AuthenticationMiddleware,
+	UserController["UpdateUser"]
 );
 
 /**
  * Router - Delete current user
  */
 router.delete(
-  API_ROUTES.USER.BASE_WITH_ID,
-  AuthenticationMiddleware,
-  UserController["DeleteUser"]
+	API_ROUTES.USER.BASE_WITH_ID,
+	AuthenticationMiddleware,
+	UserController["DeleteUser"]
 );
 
 /**
  * Router - Delete current user
  */
 router.delete(
-  API_ROUTES.USER.DELETE_PERMANENT,
-  AuthenticationMiddleware,
-  UserController["DeletePermanentUser"]
+	API_ROUTES.USER.DELETE_PERMANENT,
+	AuthenticationMiddleware,
+	UserController["DeletePermanentUser"]
 );
 
 /**
  * Router - Restore current user
  */
 router.patch(
-  API_ROUTES.USER.RESTORE,
-  AuthenticationMiddleware,
-  UserController["RestoreUser"]
+	API_ROUTES.USER.RESTORE,
+	AuthenticationMiddleware,
+	UserController["RestoreUser"]
 );
+
 export default router;

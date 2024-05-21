@@ -10,16 +10,14 @@ module.exports = (sequelize: any) => {
 	class Roles extends Model<RoleAttribute, RoleInput> implements RoleAttribute {
 		id!: string;
 		roleName!: string;
-		assignedUsers!: number[];
-		assignedPolicies!: number[];
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models: any) {
-			Roles.belongsTo(models.User, { foreignKey: "userId" });
-			Roles.hasMany(models.Policy, { foreignKey: "roleId" });
+			Roles.belongsTo(models.User);
+			Roles.hasMany(models.Policy);
 		}
 	}
 	const { DataTypes } = require("sequelize");
@@ -43,16 +41,6 @@ module.exports = (sequelize: any) => {
 					model: "User",
 					key: "id",
 				},
-			},
-			assignedUsers: {
-				type: DataTypes.ARRAY(DataTypes.INTEGER),
-				allowNull: false,
-				defaultValue: [],
-			},
-			assignedPolicies: {
-				type: DataTypes.ARRAY(DataTypes.INTEGER),
-				allowNull: false,
-				defaultValue: [],
 			},
 		},
 		{

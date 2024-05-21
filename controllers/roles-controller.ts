@@ -117,11 +117,10 @@ const CreateRole = async (
 	response: Response
 ): Promise<Response> => {
 	try {
-		const { roleName, assignedPolicies } = <RoleAttribute>request.body;
+		const { roleName } = <RoleAttribute>request.body;
 		const roles = await Roles.create({
 			id: uuidv4(),
 			roleName,
-			assignedPolicies,
 		});
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.CREATED,

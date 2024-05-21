@@ -3,7 +3,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
+    try {
+          /**
      * User Seeder
      */
     const bcrypt = require("bcrypt");
@@ -33,6 +34,10 @@ module.exports = {
         {}
       );
     });
+
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   async down(queryInterface, Sequelize) {

@@ -8,11 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID,
         unique: true,
+        defaultValue: Sequelize.UUIDV4, // Use Sequelize.UUIDV4 for automatic generation
       },
       policyName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+      },
+      isPolicyActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +35,7 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("policies");
   },

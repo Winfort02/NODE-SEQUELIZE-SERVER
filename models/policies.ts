@@ -21,7 +21,7 @@ module.exports = (sequelize: any) => {
 		static associate() {
 			const Roles = require("./roles");
 			const RolesModel = Roles(sequelize);
-			Policies.belongsTo(RolesModel, { foreignKey: "roleId" });
+			Policies.belongsTo(RolesModel);
 		}
 	}
 	const { DataTypes } = require("sequelize");
@@ -43,13 +43,6 @@ module.exports = (sequelize: any) => {
 				type: DataTypes.BOOLEAN,
 				allowNull: false,
 				defaultValue: false,
-			},
-			roleId: {
-				type: DataTypes.UUID,
-				references: {
-					model: "Roles",
-					key: "id",
-				},
 			},
 		},
 		{

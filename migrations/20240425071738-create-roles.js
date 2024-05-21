@@ -7,13 +7,17 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        unique: true,
+        defaultValue: Sequelize.UUIDV4, // Use Sequelize.UUIDV4 for automatic generation
       },
       roleName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
+      userId: {
+        type: Sequelize.UUID,
+      },
+  
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -29,6 +33,7 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("roles");
   },

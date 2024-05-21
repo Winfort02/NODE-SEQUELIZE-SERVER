@@ -13,45 +13,45 @@ const router = express.Router();
  * get all policy
  */
 router.get(
-  API_ROUTES.POLICIES.BASE,
-  AuthenticationMiddleware,
-  PolicyController["GetPolicyList"]
+	API_ROUTES.POLICIES.BASE,
+	// AuthenticationMiddleware,
+	PolicyController["GetPolicyList"]
 );
 
 /**
  *  get policy by id
  */
 router.get(
-  API_ROUTES.POLICIES.BASE_WITH_ID,
-  AuthenticationMiddleware,
-  PolicyController["GetPolicyById"]
+	API_ROUTES.POLICIES.BASE_WITH_ID,
+	// AuthenticationMiddleware,
+	PolicyController["GetPolicyById"]
 );
 
 /**
  * update policy
  */
 router.patch(
-  API_ROUTES.POLICIES.BASE_WITH_ID,
-  AuthenticationMiddleware,
-  PolicyController["UpdatePolicy"]
+	API_ROUTES.POLICIES.BASE_WITH_ID,
+	// AuthenticationMiddleware,
+	PolicyController["UpdatePolicy"]
 );
 
 /**
  * create policy
  */
 router.post(
-  API_ROUTES.POLICIES.BASE,
-  AuthenticationMiddleware,
-  PolicyController["CreatePolicy"]
+	API_ROUTES.POLICIES.BASE,
+	// AuthenticationMiddleware,
+	PolicyController["CreatePolicy"]
 );
 
 /**
  * delete policy
  */
 router.delete(
-  API_ROUTES.POLICIES.DELETE_PERMANENT,
-  AuthenticationMiddleware,
-  PolicyController["DeletePolicy"]
+	API_ROUTES.POLICIES.DELETE_PERMANENT,
+	// AuthenticationMiddleware,
+	PolicyController["DeletePolicy"]
 );
 
 export default router;

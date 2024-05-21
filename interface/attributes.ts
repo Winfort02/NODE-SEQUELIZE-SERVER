@@ -17,13 +17,10 @@ export interface RoleAttribute {
 	roleName: string;
 	userId?: string;
 	policies?: PolicyAttribute[];
-	assignedUsers: number[];
-	assignedPolicies: number[];
 }
 
 export interface PolicyAttribute {
 	id: string;
 	policyName: string;
 	isPolicyActive: boolean;
-	roleId?: string;
 }
