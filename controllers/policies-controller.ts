@@ -13,9 +13,12 @@ const { Policy } = db;
 /**
  * method to get all policy
  */
-const GetPolicyList = async (response: Response): Promise<Response> => {
+const GetPolicyList = async (
+	request: Request,
+	response: Response
+): Promise<Response> => {
 	try {
-		const data = await Policy;
+		const data = await Policy.findAll();
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.SUCCESS,
 			HTTP_RESPONSE.MESSAGES.SUCCESS,
@@ -82,7 +85,6 @@ const CreatePolicy = async (
 	try {
 		const { policyName, isPolicyActive } = <PolicyAttribute>request.body;
 		const policy = await Policy.create({
-			id: uuidv4(),
 			policyName,
 			isPolicyActive,
 		});

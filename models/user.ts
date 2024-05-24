@@ -30,6 +30,7 @@ module.exports = (sequelize: any) => {
 		username!: string;
 		userType!: number;
 		password!: string;
+		roleId!: number;
 
 		toJSON() {
 			// hide protected fields
@@ -41,6 +42,7 @@ module.exports = (sequelize: any) => {
 		}
 
 		static associate(models: any) {
+			User.belongsTo(models.Role);
 			// define association here
 			// user associationg with services models
 			// User.belongsToMany(models, {
@@ -80,6 +82,14 @@ module.exports = (sequelize: any) => {
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
+			},
+			roleId: {
+				type: DataTypes.INTEGER,
+				allowNull: true,
+				references: {
+					model: "Roles",
+					key: "id",
+				},
 			},
 		},
 		{

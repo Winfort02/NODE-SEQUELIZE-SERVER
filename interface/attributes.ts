@@ -5,6 +5,7 @@ export interface UserAttributes {
 	email: string;
 	userType: number;
 	password: string;
+	roleId?: number;
 }
 
 export interface SignInAttribute {
@@ -13,14 +14,13 @@ export interface SignInAttribute {
 }
 
 export interface RoleAttribute {
-	id: string;
+	id: number;
 	roleName: string;
-	userId?: string;
 	policies?: PolicyAttribute[];
 }
 
 export interface PolicyAttribute {
-	id: string;
+	id: number;
 	policyName: string;
 	isPolicyActive: boolean;
 }

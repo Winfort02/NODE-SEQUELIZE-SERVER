@@ -2,13 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("policies", {
+    await queryInterface.createTable("Policies", {
       id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.UUID,
-        unique: true,
-        defaultValue: Sequelize.UUIDV4, // Use Sequelize.UUIDV4 for automatic generation
+      	type: Sequelize.INTEGER,
+				primaryKey: true,
+				autoIncrement: true,
+				unique: true,
       },
       policyName: {
         type: Sequelize.STRING,
@@ -16,7 +15,7 @@ module.exports = {
         unique: true,
       },
       isPolicyActive: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.TINYINT,
         allowNull: false,
         defaultValue: false,
       },
@@ -37,6 +36,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("policies");
+    await queryInterface.dropTable("Policies");
   },
 };

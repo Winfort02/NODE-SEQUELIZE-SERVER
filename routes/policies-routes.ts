@@ -1,8 +1,8 @@
 import express from "express";
+import { AuthenticationMiddleware } from "../utils/middleware-common-utils";
 import PolicyController from "./../controllers/policies-controller";
 // import AuthenticationController from "../controllers/authentication-contoller"
 import { API_ROUTES } from "../helper/constant-routes";
-import { AuthenticationMiddleware } from "../utils/middleware-common-utils";
 
 /**
  * create instance of express router
@@ -23,7 +23,7 @@ router.get(
  */
 router.get(
 	API_ROUTES.POLICIES.BASE_WITH_ID,
-	// AuthenticationMiddleware,
+	AuthenticationMiddleware,
 	PolicyController["GetPolicyById"]
 );
 

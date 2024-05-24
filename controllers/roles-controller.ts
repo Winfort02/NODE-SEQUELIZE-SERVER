@@ -6,16 +6,18 @@ import {
 	httpSuccessResponse,
 } from "../utils/http-common-utils";
 import { RoleAttribute } from "../interface/attributes";
-import { v4 as uuidv4 } from "uuid";
 
-const { Roles } = db;
+const { Role } = db;
 
 /**
  * method to get all roles
  */
-const GetRolesList = async (response: Response): Promise<Response> => {
+const GetRolesList = async (
+	request: Request,
+	response: Response
+): Promise<Response> => {
 	try {
-		const data = await Roles;
+		const data = await Role.findAll();
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.SUCCESS,
 			HTTP_RESPONSE.MESSAGES.SUCCESS,
@@ -44,7 +46,7 @@ const GetRoleByUserId = async (
 ): Promise<Response> => {
 	try {
 		const { userId } = request.params;
-		const roles = await Roles.findByPk(userId);
+		const roles = await Role.findByPk(userId);
 		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -81,7 +83,7 @@ const GetRoleById = async (
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const roles = await Roles.findByPk(id);
+		const roles = await Role.findByPk(id);
 		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -118,8 +120,7 @@ const CreateRole = async (
 ): Promise<Response> => {
 	try {
 		const { roleName } = <RoleAttribute>request.body;
-		const roles = await Roles.create({
-			id: uuidv4(),
+		const roles = await Role.create({
 			roleName,
 		});
 		return httpSuccessResponse(
@@ -151,7 +152,7 @@ const UpdateRole = async (
 	try {
 		const { id } = request.params;
 		const { roleName } = <RoleAttribute>request.body;
-		const roles = await Roles.findByPk(id);
+		const roles = await Role.findByPk(id);
 		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -189,7 +190,7 @@ const DeleteRole = async (
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const roles = await Roles.findByPk(id);
+		const roles = await Role.findByPk(id);
 		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -227,7 +228,7 @@ const AssignRolesToUser = async (
 ): Promise<Response> => {
 	try {
 		const { userId, roleId } = request.body;
-		const role = await Roles.findByPk(roleId);
+		const role = await Role.findByPk(roleId);
 		if (!role) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -268,7 +269,7 @@ const AssignPolicyToRole = async (
 ): Promise<Response> => {
 	try {
 		const { roleId, policyId } = request.body;
-		const role = await Roles.findByPk(roleId);
+		const role = await Role.findByPk(roleId);
 		if (!role) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,

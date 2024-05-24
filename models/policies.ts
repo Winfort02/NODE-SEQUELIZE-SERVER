@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from "uuid";
 import { CONSTANT_MODEL } from "../helper/constant-model";
 
 module.exports = (sequelize: any) => {
-	class Policies
+	class Policy
 		extends Model<PolicyAttribute, PolicyInput>
 		implements PolicyAttribute
 	{
-		id!: string;
+		id!: number;
 		policyName!: string;
 		isPolicyActive!: boolean;
 		/**
@@ -18,21 +18,22 @@ module.exports = (sequelize: any) => {
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
-		static associate() {
-			const Roles = require("./roles");
-			const RolesModel = Roles(sequelize);
-			Policies.belongsTo(RolesModel);
+		static associate(models: any) {
+			Policy.belongsToMany(models.Role, {
+				through: "RolePolicy",
+				onDelete: "RESTRICT",
+				onUpdate: "RESTRICT",
+			});
 		}
 	}
 	const { DataTypes } = require("sequelize");
 
-	Policies.init(
+	Policy.init(
 		{
 			id: {
-				type: DataTypes.UUID,
-				defaultValue: uuidv4(),
-				allowNull: false,
+				type: DataTypes.INTEGER,
 				primaryKey: true,
+				autoIncrement: true,
 				unique: true,
 			},
 			policyName: {
@@ -40,7 +41,7 @@ module.exports = (sequelize: any) => {
 				allowNull: false,
 			},
 			isPolicyActive: {
-				type: DataTypes.BOOLEAN,
+				type: DataTypes.TINYINT,
 				allowNull: false,
 				defaultValue: false,
 			},
@@ -48,8 +49,8 @@ module.exports = (sequelize: any) => {
 		{
 			sequelize,
 			modelName: CONSTANT_MODEL.MODEL_NAME.POLICY,
-			paranoid: true,
+			paranoid: false,
 		}
 	);
-	return Policies;
+	return Policy;
 };
