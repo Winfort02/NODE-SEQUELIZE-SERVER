@@ -76,7 +76,7 @@ router.post(
  * Assign policy to a role (requires authentication)
  */
 router.post(
-	`${API_ROUTES.ROLES.BASE_WITH_ID}/assign-policy`,
+	`${API_ROUTES.ROLES.BASE}/assign-policy`,
 	AuthenticationMiddleware,
 	RolesController["AssignPolicyToRole"]
 );

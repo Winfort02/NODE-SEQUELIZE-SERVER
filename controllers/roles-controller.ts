@@ -7,7 +7,7 @@ import {
 } from "../utils/http-common-utils";
 import { RoleAttribute } from "../interface/attributes";
 
-const { Role } = db;
+const { Role, Policy } = db;
 
 /**
  * method to get all roles
@@ -83,7 +83,12 @@ const GetRoleById = async (
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const roles = await Role.findByPk(id);
+		const roles = await Role.findByPk(id, {
+			include: {
+				model: Policy,
+				through: { attributes: [] },
+			},
+		});
 		if (!roles) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -267,9 +272,9 @@ const AssignPolicyToRole = async (
 	request: Request,
 	response: Response
 ): Promise<Response> => {
+	const { roleId, policyId, isPolicyActive } = request.body;
 	try {
-		const { roleId, policyId } = request.body;
-		const role = await Role.findByPk(roleId);
+		const role = await Role.findByPk(roleId, { include: Policy });
 		if (!role) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -278,23 +283,30 @@ const AssignPolicyToRole = async (
 				response
 			);
 		}
-		if (role.assignedPolicies.includes(policyId)) {
+
+		const policy = await Policy.findByPk(policyId);
+
+		if (!policy) {
 			return httpErrorResponse(
-				HTTP_RESPONSE.STATUS.BAD_REQUEST,
-				HTTP_RESPONSE.MESSAGES.DUPLICATE,
+				HTTP_RESPONSE.STATUS.NOT_FOUND,
+				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
 				{},
 				response
 			);
 		}
-		role.assignedPolicies.push(policyId);
-		await role.save();
+
+		await role.addPolicy(policy, {
+			through: { isPolicyActive },
+		});
+
 		return httpSuccessResponse(
-			HTTP_RESPONSE.STATUS.NO_CONTENT,
-			HTTP_RESPONSE.MESSAGES.NO_CONTENT,
+			HTTP_RESPONSE.STATUS.CREATED,
+			HTTP_RESPONSE.MESSAGES.CREATED,
 			{},
 			response
 		);
 	} catch (error) {
+		console.log(error);
 		return httpErrorResponse(
 			HTTP_RESPONSE.STATUS.BAD_REQUEST,
 			HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
