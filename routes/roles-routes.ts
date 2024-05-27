@@ -23,7 +23,7 @@ router.get(
  */
 router.get(
 	API_ROUTES.ROLES.BASE_WITH_ID,
-	AuthenticationMiddleware,
+	// AuthenticationMiddleware,
 	RolesController["GetRoleById"]
 );
 
@@ -64,20 +64,11 @@ router.get(
 );
 
 /**
- * Assign user to a role (requires authentication)
- */
-router.post(
-	`${API_ROUTES.ROLES.BASE_WITH_ID}/assign-user`,
-	AuthenticationMiddleware,
-	RolesController["AssignRolesToUser"]
-);
-
-/**
  * Assign policy to a role (requires authentication)
  */
 router.post(
 	`${API_ROUTES.ROLES.BASE}/assign-policy`,
-	AuthenticationMiddleware,
+	// AuthenticationMiddleware,
 	RolesController["AssignPolicyToRole"]
 );
 

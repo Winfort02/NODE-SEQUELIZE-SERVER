@@ -30,7 +30,6 @@ module.exports = (sequelize: any) => {
 		username!: string;
 		userType!: number;
 		password!: string;
-		roleId!: number;
 
 		toJSON() {
 			// hide protected fields
@@ -82,14 +81,6 @@ module.exports = (sequelize: any) => {
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,
-			},
-			roleId: {
-				type: DataTypes.INTEGER,
-				allowNull: true,
-				references: {
-					model: "Roles",
-					key: "id",
-				},
 			},
 		},
 		{

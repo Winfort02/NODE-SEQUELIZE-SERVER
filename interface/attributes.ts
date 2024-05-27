@@ -5,7 +5,6 @@ export interface UserAttributes {
 	email: string;
 	userType: number;
 	password: string;
-	roleId?: number;
 }
 
 export interface SignInAttribute {

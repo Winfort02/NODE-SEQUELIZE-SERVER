@@ -86,4 +86,13 @@ router.patch(
 	UserController["RestoreUser"]
 );
 
+/**
+ * Assign user to a role (requires authentication)
+ */
+router.post(
+	`${API_ROUTES.USER.BASE}/assign-user`,
+	AuthenticationMiddleware,
+	UserController["AssignRoleToUser"]
+);
+
 export default router;
