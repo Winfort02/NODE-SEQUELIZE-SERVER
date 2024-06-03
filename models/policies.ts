@@ -12,7 +12,11 @@ module.exports = (sequelize: any) => {
 	{
 		id!: number;
 		policyName!: string;
-		isPolicyActive!: boolean;
+		canAdd!: boolean;
+		canDelete!: boolean;
+		canRestore!: boolean;
+		canUpdate!: boolean;
+		canView!: boolean;
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
@@ -40,7 +44,27 @@ module.exports = (sequelize: any) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			isPolicyActive: {
+			canAdd: {
+				type: DataTypes.TINYINT,
+				allowNull: false,
+				defaultValue: false,
+			},
+			canDelete: {
+				type: DataTypes.TINYINT,
+				allowNull: false,
+				defaultValue: false,
+			},
+			canUpdate: {
+				type: DataTypes.TINYINT,
+				allowNull: false,
+				defaultValue: false,
+			},
+			canRestore: {
+				type: DataTypes.TINYINT,
+				allowNull: false,
+				defaultValue: false,
+			},
+			canView: {
 				type: DataTypes.TINYINT,
 				allowNull: false,
 				defaultValue: false,

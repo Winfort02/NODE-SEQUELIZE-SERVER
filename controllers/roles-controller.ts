@@ -270,54 +270,6 @@ const AssignPolicyToRole = async (
 	}
 };
 
-const AssignRoleToUser = async (
-	request: Request,
-	response: Response
-): Promise<Response> => {
-	const { userId, roleId } = request.body;
-	console.log(request.body, "ge");
-
-	try {
-		const user = await User.findByPk(userId, { include: Role });
-		if (!user) {
-			return httpErrorResponse(
-				HTTP_RESPONSE.STATUS.NOT_FOUND,
-				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
-				{},
-				response
-			);
-		}
-
-		const role = await Role.findByPk(roleId);
-
-		if (!role) {
-			return httpErrorResponse(
-				HTTP_RESPONSE.STATUS.NOT_FOUND,
-				HTTP_RESPONSE.MESSAGES.NOT_FOUND,
-				{},
-				response
-			);
-		}
-
-		await user.addRole(Role);
-
-		return httpSuccessResponse(
-			HTTP_RESPONSE.STATUS.CREATED,
-			HTTP_RESPONSE.MESSAGES.CREATED,
-			{},
-			response
-		);
-	} catch (error) {
-		console.log(error);
-		return httpErrorResponse(
-			HTTP_RESPONSE.STATUS.BAD_REQUEST,
-			HTTP_RESPONSE.MESSAGES.BAD_REQUEST,
-			error,
-			response
-		);
-	}
-};
-
 export default {
 	GetRolesList,
 	GetRoleByUserId,
@@ -326,5 +278,4 @@ export default {
 	DeleteRole,
 	UpdateRole,
 	AssignPolicyToRole,
-	AssignRoleToUser,
 };

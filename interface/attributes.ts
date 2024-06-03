@@ -21,5 +21,9 @@ export interface RoleAttribute {
 export interface PolicyAttribute {
 	id: number;
 	policyName: string;
-	isPolicyActive: boolean;
+	canAdd: boolean;
+	canDelete: boolean;
+	canUpdate: boolean;
+	canRestore: boolean;
+	canView: boolean;
 }

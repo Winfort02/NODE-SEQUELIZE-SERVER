@@ -83,10 +83,16 @@ const CreatePolicy = async (
 	response: Response
 ): Promise<Response> => {
 	try {
-		const { policyName, isPolicyActive } = <PolicyAttribute>request.body;
+		const { policyName, canAdd, canDelete, canRestore, canUpdate, canView } = <
+			PolicyAttribute
+		>request.body;
 		const policy = await Policy.create({
 			policyName,
-			isPolicyActive,
+			canAdd,
+			canDelete,
+			canRestore,
+			canUpdate,
+			canView,
 		});
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.CREATED,
@@ -115,7 +121,9 @@ const UpdatePolicy = async (
 ): Promise<Response> => {
 	try {
 		const { id } = request.params;
-		const { policyName, isPolicyActive } = <PolicyAttribute>request.body;
+		const { policyName, canAdd, canDelete, canRestore, canUpdate, canView } = <
+			PolicyAttribute
+		>request.body;
 		const policy = await Policy.findByPk(id);
 		if (!policy) {
 			return httpErrorResponse(
@@ -126,7 +134,11 @@ const UpdatePolicy = async (
 			);
 		}
 		policy.policyName = policyName;
-		policy.isPolicyActive = isPolicyActive;
+		policy.canAdd = canAdd;
+		policy.canDelete = canDelete;
+		policy.canRestore = canRestore;
+		policy.canUpdate = canUpdate;
+		policy.canView = canView;
 		policy.save();
 		return httpSuccessResponse(
 			HTTP_RESPONSE.STATUS.UPDATED,

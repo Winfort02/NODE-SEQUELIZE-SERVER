@@ -18,7 +18,7 @@ module.exports = (sequelize: any) => {
 		static associate(models: any) {
 			Role.hasMany(models.User);
 			Role.belongsToMany(models.Policy, {
-				through: "RolePolicy",
+				through: "RolePolicy,",
 				onDelete: "RESTRICT",
 				onUpdate: "RESTRICT",
 			});

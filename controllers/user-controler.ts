@@ -338,7 +338,7 @@ const AssignRoleToUser = async (
 	const { userId, roleId } = request.body;
 
 	try {
-		const user = await User.findByPk(userId, { include: Role });
+		const user = await User.findByPk(userId);
 		if (!user) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -348,7 +348,8 @@ const AssignRoleToUser = async (
 			);
 		}
 
-		const role = await Role.findByPk(roleId);
+		const role = await Role.findByPk(roleId, { include: User });
+
 		if (!role) {
 			return httpErrorResponse(
 				HTTP_RESPONSE.STATUS.NOT_FOUND,
@@ -358,7 +359,7 @@ const AssignRoleToUser = async (
 			);
 		}
 
-		user.roleId = roleId;
+		user.setRole(Role);
 		await user.save();
 
 		return httpSuccessResponse(
